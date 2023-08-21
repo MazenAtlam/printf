@@ -43,6 +43,31 @@ char *_strcpy(char *dest, const char *src)
 }
 
 /**
+ * num_length - A function that computes the length of an integer
+ * @num: The integer
+ *
+ * Return: The length
+*/
+
+unsigned int num_length(int num)
+{
+	unsigned int length = 0;
+
+	if (num < 0)
+		num = num * -1;
+	if (num >= 0 && num <= 9)
+		return (1);
+
+	while (num != 0)
+	{
+		num = num / 10;
+		length++;
+	}
+
+	return (length);
+}
+
+/**
  * _printf - A function prints a string includes n of arguments of any type
  * @format: The customed string to be printed
  *
@@ -53,11 +78,8 @@ int _printf(const char *format, ...)
 {	unsigned int i, j, length = 0;
 	char *str;
 	va_list args;
-	fr_t type[] = {
-		{"c", char_arg},
-		{"%", char_arg},
-		{"s", string_arg},
-		{NULL, NULL} };
+	fr_t type[] = { {"c", char_arg}, {"%", char_arg}, {"s", string_arg},
+		{"d", int_arg}, {"i", int_arg}, {NULL, NULL} };
 
 	if (format == NULL || (format[0] == '%' && format[1] == '\0'))
 		return (-1);
@@ -68,7 +90,7 @@ int _printf(const char *format, ...)
 	va_start(args, format);
 	str = malloc((_strlen(format) + 1) * sizeof(char));
 	if (str == NULL)
-		return (0);
+		return (-1);
 
 	str = _strcpy(str, format);
 	for (i = 0; str[i] != '\0'; i++)
@@ -78,7 +100,10 @@ int _printf(const char *format, ...)
 			for (j = 0; type[j].ch != NULL; j++)
 			{
 				if (str[i + 1] == type[j].ch[0])
-					str = type[j].func(str, &i, args);	}	}	}
+				{
+					str = type[j].func(str, &i, args);
+					if (str == NULL)
+						return (-1);	}	}	}	}
 	va_end(args);
 	length = _strlen(str);
 	write(1, str, length);
