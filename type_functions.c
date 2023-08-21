@@ -45,20 +45,19 @@ char *char_arg(char *format, unsigned int *pos, va_list args)
 
 char *string_arg(char *format, unsigned int *pos, va_list args)
 {
-	char *str = va_arg(args, char *), format_copy;
+	char *str = va_arg(args, char *);
 	unsigned int i, j, format_len = _strlen(format),
 		str_len = _strlen(str), totlen = format_len + str_len - 2;
 
 	if (str == NULL || str[0] == '\0')
 		str = "(null)";
-	format_copy = _strcpy(format_copy, format);
 	format = realloc(format, (totlen + 1) * sizeof(char));
 	if (format == NULL)
 		return (NULL);
 
 	format[totlen] = '\0';
 	for (i = totlen - 1, j = format_len - 1; j > (*pos) + 1; i--, j--)
-		format[i] = format_copy[j];
+		format[i] = format[j];
 	for (i = (*pos), j = 0; str[j] != '\0'; i++, j++)
 		format[i] = str[j];
 	*pos = (*pos) + str_len - 1;
