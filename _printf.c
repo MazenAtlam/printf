@@ -78,20 +78,18 @@ int _printf(const char *format, ...)
 {	unsigned int i, j, length = 0;
 	char *str;
 	va_list args;
-	fr_t type[] = { {"c", char_arg}, {"%", char_arg}, {"s", string_arg},
-		{"d", int_arg}, {"i", int_arg}, {NULL, NULL} };
+	fr_t type[] = { {"c", char_arg}, {"%", char_arg},
+	{"s", string_arg}, {"d", int_arg}, {"i", int_arg},
+	{NULL, NULL} };
 
 	if (format == NULL || (format[0] == '%' && format[1] == '\0'))
 		return (-1);
-
 	if (format[0] == '%' && format[1] == ' ' && format[2] == '\0')
 		return (-1);
-
 	va_start(args, format);
-	str = malloc((_strlen(format) + 1) * sizeof(char));
+	str = malloc((_strlen(format) + 1) * sizeof(unsigned char));
 	if (str == NULL)
 		return (-1);
-
 	str = _strcpy(str, format);
 	for (i = 0; str[i] != '\0'; i++)
 	{
@@ -100,13 +98,11 @@ int _printf(const char *format, ...)
 			for (j = 0; type[j].ch != NULL; j++)
 			{
 				if (str[i + 1] == type[j].ch[0])
-				{
 					str = type[j].func(str, &i, args);
-					if (str == NULL)
-						return (-1);	}	}	}	}
+				if (str == NULL)
+					return (-1);	}	}	}
 	va_end(args);
 	length = _strlen(str);
 	write(1, str, length);
 	free(str);
-	return (length);
-}
+	return (length);	}

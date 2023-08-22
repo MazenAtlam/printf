@@ -8,7 +8,7 @@ A function that can :
 # Prototype
 
 int printf(char *format, arg1, arg2, ...);
- 
+
 # Formats of The specific identifiers
 
 Write The '%' character followded by one of the following characters :
