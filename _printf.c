@@ -1,4 +1,3 @@
-#include "type.h"
 #include "main.h"
 #include <stdlib.h>
 #include <stdarg.h>
@@ -99,11 +98,11 @@ int _printf(const char *format, ...)
 			for (j = 0; type[j].ch != NULL; j++)
 			{
 				if (str[i + 1] == type[j].ch[0])
-					str = type[j].func(str, &i, args);
+					str = type[j].func(str, &i, &length, args);
 				if (str == NULL)
 					return (-1);	}	}	}
 	va_end(args);
-	length = _strlen(str);
-	write(1, str, length);
+	length = length + _strlen(str);
+	write(1, str, _strlen(str));
 	free(str);
 	return (length);	}
