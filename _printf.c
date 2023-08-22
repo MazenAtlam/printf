@@ -1,3 +1,4 @@
+#include "type.h"
 #include "main.h"
 #include <stdlib.h>
 #include <stdarg.h>

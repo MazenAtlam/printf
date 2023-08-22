@@ -1,3 +1,6 @@
+#ifndef TYPE_H
+#define TYPE_H
+
 #include "main.h"
 #include <stdlib.h>
 #include <unistd.h>
@@ -143,3 +146,5 @@ char *int_arg(char *format, unsigned int *pos, va_list args)
 	*pos = (*pos) + sign + num_len - 1;
 	return (format);
 }
+
+#endif
