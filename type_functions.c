@@ -69,7 +69,7 @@ char *string_arg(char *format, unsigned int *pos, va_list args)
 	char *str = va_arg(args, char *);
 	unsigned int i, j, format_len = _strlen(format), str_len, totlen;
 
-	if (str == NULL || str[0] == '\0')
+	if (str == NULL)
 		str = "(null)";
 	str_len = _strlen(str);
 	totlen = format_len + str_len - 2;
