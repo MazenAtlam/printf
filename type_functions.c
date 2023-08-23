@@ -1,6 +1,3 @@
-#ifndef TYPE_H
-#define TYPE_H
-
 #include "main.h"
 #include <stdlib.h>
 #include <unistd.h>
@@ -11,11 +8,13 @@
  * @args: The arguments list
  * @format: The string to be edited
  * @pos: A pointer to the position to be added the character in
+ * @length : The printed length in the function if needed
  *
  * Return: A pointer to the modified string
 */
 
-char *char_arg(char *format, unsigned int *pos, va_list args)
+char *char_arg(char *format, unsigned int *pos, unsigned int *length,
+		va_list args)
 {
 	char *format_copy;
 	unsigned int j, k = 1, format_len = _strlen(format), i = (*pos);
@@ -31,6 +30,7 @@ char *char_arg(char *format, unsigned int *pos, va_list args)
 				return (NULL);
 			format_copy = _strcpy(format_copy, format);
 			format[i] = '\0';
+			*length = i + 1;
 			write(1, format, i);
 			write(1, "\0", 1);
 			format = realloc(format, (format_len - i));
@@ -62,17 +62,20 @@ char *char_arg(char *format, unsigned int *pos, va_list args)
  * @args: The arguments list
  * @format: The string to be edited
  * @pos: A pointer to the position to be added the string in
+ * @length : The printed length in the function if needed
  *
  * Return: A pointer to the modified string
 */
 
-char *string_arg(char *format, unsigned int *pos, va_list args)
+char *string_arg(char *format, unsigned int *pos, unsigned int *length,
+		va_list args)
 {
 	char *format_copy;
 	char *str = va_arg(args, char *);
 	unsigned int i, j, format_len = _strlen(format), str_len, totlen;
 
-	if (str == NULL || str[0] == '\0')
+	*length = 0;
+	if (str == NULL)
 		str = "(null)";
 	str_len = _strlen(str);
 	totlen = format_len + str_len - 2;
@@ -101,17 +104,20 @@ char *string_arg(char *format, unsigned int *pos, va_list args)
  * @args: The arguments list
  * @format: The string to be edited
  * @pos: A pointer to the position to be added the string in
+ * @length : The printed length in the function if needed
  *
  * Return: A pointer to the modified string
 */
 
-char *int_arg(char *format, unsigned int *pos, va_list args)
+char *int_arg(char *format, unsigned int *pos, unsigned int *length,
+		va_list args)
 {
 	char *format_copy;
 	int num = va_arg(args, int);
 	unsigned int i, j, sign = 0, digit, denom = 1, format_len = _strlen(format),
 		num_len = num_length(num), totlen = format_len + num_len - 2;
 
+	*length = 0;
 	if (num < 0)
 	{
 		totlen++;
@@ -146,5 +152,3 @@ char *int_arg(char *format, unsigned int *pos, va_list args)
 	*pos = (*pos) + sign + num_len - 1;
 	return (format);
 }
-
-#endif

@@ -1,4 +1,3 @@
-#include "type.h"
 #include "main.h"
 #include <stdlib.h>
 #include <stdarg.h>
@@ -79,9 +78,10 @@ int _printf(const char *format, ...)
 {	unsigned int i, j, length = 0;
 	char *str;
 	va_list args;
-	fr_t type[] = { {"c", char_arg}, {"%", char_arg},
-	{"s", string_arg}, {"d", int_arg}, {"i", int_arg},
-	{NULL, NULL} };
+	fr_t type[] = { {"c", char_arg}, {"%", char_arg}, {"r", strrev},
+	{"s", string_arg}, {"d", int_arg}, {"i", int_arg}, {"b", binary_conv},
+	{"u", unsigned_int_arg}, {"R", rot13_conv}, {"o", oct},
+	{"x", hex}, {"X", hex}, {NULL, NULL} };
 
 	if (format == NULL || (format[0] == '%' && format[1] == '\0'))
 		return (-1);
@@ -99,11 +99,11 @@ int _printf(const char *format, ...)
 			for (j = 0; type[j].ch != NULL; j++)
 			{
 				if (str[i + 1] == type[j].ch[0])
-					str = type[j].func(str, &i, args);
+					str = type[j].func(str, &i, &length, args);
 				if (str == NULL)
 					return (-1);	}	}	}
 	va_end(args);
-	length = _strlen(str);
-	write(1, str, length);
+	length = length + _strlen(str);
+	write(1, str, _strlen(str));
 	free(str);
 	return (length);	}
