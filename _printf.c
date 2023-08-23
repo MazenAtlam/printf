@@ -78,9 +78,10 @@ int _printf(const char *format, ...)
 {	unsigned int i, j, length = 0;
 	char *str;
 	va_list args;
-	fr_t type[] = { {"c", char_arg}, {"%", char_arg},
-	{"s", string_arg}, {"d", int_arg}, {"i", int_arg},
-	{NULL, NULL} };
+	fr_t type[] = { {"c", char_arg}, {"%", char_arg}, {"r", strrev},
+	{"s", string_arg}, {"d", int_arg}, {"i", int_arg}, {"b", binary_conv},
+	{"u", unsigned_int_arg}, {"R", rot13_conv}, {"o", oct},
+	{"x", hex}, {"X", hex}, {NULL, NULL} };
 
 	if (format == NULL || (format[0] == '%' && format[1] == '\0'))
 		return (-1);

@@ -15,6 +15,14 @@ char *int_arg(char *format, unsigned int *pos, unsigned int *length,
 		va_list args);
 char *binary_conv(char *format, unsigned int *pos, unsigned int *length,
 		va_list args);
+char *strrev(char *format, unsigned int *pos, unsigned int *length,
+		va_list args);
+char *unsigned_int_arg(char *format, unsigned int *pos, unsigned int *length,
+		va_list args);
+char *hex(char *format, unsigned int *pos, unsigned int *length, va_list args);
+char *oct(char *format, unsigned int *pos, unsigned int *length, va_list args);
+char *rot13_conv(char *format, unsigned int *pos, unsigned int *length,
+		va_list args);
 
 /**
  * struct fr - A type printer selector
