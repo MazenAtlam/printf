@@ -22,7 +22,7 @@ char *hex(char *format, unsigned int *pos, unsigned int *length, va_list args)
 	*length = 0;
 	if (num == 0)
 	{
-		hex[0] = 0;
+		hex[0] = 48;
 		hex_len = 1;    }
 	else
 	{

@@ -99,9 +99,11 @@ int _printf(const char *format, ...)
 			for (j = 0; type[j].ch != NULL; j++)
 			{
 				if (str[i + 1] == type[j].ch[0])
+				{
 					str = type[j].func(str, &i, &length, args);
-				if (str == NULL)
-					return (-1);	}	}	}
+					if (str == NULL)
+						return (-1);
+					break;	}	}	}	}
 	va_end(args);
 	length = length + _strlen(str);
 	write(1, str, _strlen(str));
